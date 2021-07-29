@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.database.Cursor;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Environment;
@@ -28,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     String selectedMusic;
     String musicPath = Environment.getExternalStorageDirectory().getPath() + "/";
     MediaPlayer media;
-    Button btnStart, btnStop;
+    Button btnStart, btnCurs, btnStop;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
         });
         selectedMusic = arrList.get(0);
         btnStart = findViewById(R.id.btn_start);
+        btnCurs = findViewById(R.id.btn_curs);
         btnStop = findViewById(R.id.btn_stop);
         textMusic = findViewById(R.id.text_music);
         proBar = findViewById(R.id.progress);
@@ -78,6 +80,20 @@ public class MainActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
+            }
+        });
+        btnCurs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (btnCurs.getText().equals("일시중지")){
+                    media.pause();
+                    btnCurs.setText("이어듣기");
+                    proBar.setVisibility(View.INVISIBLE);
+                }else if(btnCurs.getText().equals("이어듣기")){
+                    media.start();
+                    btnCurs.setText("일시중지");
+                    proBar.setVisibility(View.VISIBLE);
+                }
             }
         });
         btnStop.setOnClickListener(new View.OnClickListener() {
